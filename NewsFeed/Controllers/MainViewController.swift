@@ -47,20 +47,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func addRefreshControl(){
         refreshControl = UIRefreshControl()
         refreshControl?.tintColor = UIColor.blue
-        refreshControl?.addTarget(self, action: #selector(fetchData), for: .valueChanged)
+        refreshControl?.addTarget(self, action: #selector(updateData), for: .valueChanged)
         tableView.addSubview(refreshControl!)
     }
     @objc func fetchData(){
         feeds = []
         let feedClient = OpenNewsFeedClient()
-        feedClient.requestFeed { (feeds) in
-            self.feeds = feeds
-            self.refreshControl!.endRefreshing()
-            OperationQueue.main.addOperation {
-                self.tableView.reloadSections(IndexSet(integer: 0), with: .left)
+        DispatchQueue.global(qos: .background).async {
+            feedClient.requestFeed { (feeds) in
+                self.feeds = feeds
+                DispatchQueue.main.async {
+                    self.tableView.reloadSections(IndexSet(integer: 0), with: .left)
+                }
             }
         }
     }
+    
+    
     private func searchControl()  {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -86,6 +89,19 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     private func arrayData() -> [NewsPost]? {
         return isFiltering() ? filteredFeeds : feeds
+    }
+    @objc func updateData(){
+        let feedClient = OpenNewsFeedClient()
+        DispatchQueue.global(qos: .background).async {
+            feedClient.requestFeed(completionHandler: { (newFeeds) in
+                self.feeds = newFeeds
+            })
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
+            }
+        }
+        
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         

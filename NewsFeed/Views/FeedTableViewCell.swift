@@ -12,18 +12,18 @@ class FeedTableViewCell : UITableViewCell {
     
     var  url : String?
 
-//    var item : NewsPost! {
-//        didSet {
-//            url = item.url
-//            title.text = item.title
-//            source.text = item.source
-//            author.text = item.author
-//            descript.text = item.descript
-//            dateOfPublication.text = item.publishedAt
-//            profileImageView.downloadedForLink(from: item.imageUrl)
-//
-//        }
-//    }
+    var item : NewsPost! {
+        didSet {
+            url = item.url
+            title.text = item.title
+            source.text = item.source
+            author.text = item.author
+            descript.text = item.descript
+            dateOfPublication.text = item.publishedAt
+            profileImageView.downloadedForLink(from: item.imageUrl)
+
+        }
+    }
     
     let title : UILabel = {
         let label = UILabel()
