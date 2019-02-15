@@ -9,7 +9,7 @@
 import UIKit
 import SafariServices
 
-class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     var refreshControl : UIRefreshControl?
     let searchController = UISearchController(searchResultsController: nil)
@@ -66,7 +66,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private func searchControl()  {
         searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.scopeButtonTitles = ["Title", "Source", "Author"]
+//        searchController.searchBar.delegate = self
+//        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search"
         navigationItem.searchController = searchController
         searchController.searchBar.tintColor = UIColor.blue
@@ -77,7 +79,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         return searchController.searchBar.text?.isEmpty ?? true
     }
 
-    private func filterContentForSearchText(_ searchText: String, scope: String = "All") {
+    private func filterContentForSearchText(_ searchText: String, scope: String = "Title") {
         filteredFeeds = feeds.filter({( post : NewsPost) -> Bool in
             return post.title.lowercased().contains(searchText.lowercased())
         })

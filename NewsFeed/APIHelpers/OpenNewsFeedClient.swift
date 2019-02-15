@@ -43,41 +43,16 @@ class OpenNewsFeedClient {
                 let url : String
                 let imageUrl : String
                 let publishedAt : String
-                if  (myI!["source"]!["name"] as? String) != nil{
-                    source = "source: " + (myI!["source"]!["name"] as! String)
-                } else {
-                    source = "source: "
-                }
-                if (myI!["author"] as? String) != nil {
-                    author = "author: " + (myI!["author"] as! String)
-                } else {
-                    author = "author: "
-                }
-                if (myI!["title"] as? String) != nil {
-                    title = (myI!["title"] as! String)
-                } else {
-                    title = " "
-                }
-                if (myI!["description"] as? String ) != nil {
-                    description = (myI!["description"] as! String )
-                } else {
-                    description = " "
-                }
-                if (myI!["url"] as? String) != nil {
-                    url = (myI!["url"] as! String)
-                } else  {
-                    url = " "
-                }
-                if (myI!["urlToImage"] as? String) != nil {
-                    imageUrl = (myI!["urlToImage"] as! String)
-                } else {
-                    imageUrl = " "
-                }
-                if (myI!["publishedAt"] as? String) != nil {
-                    publishedAt = (myI!["publishedAt"] as! String)
-                } else {
-                    publishedAt = " "
-                }
+
+               ((myI!["source"]!["name"] as? String) != nil) ? (source = "source: " + (myI!["source"]!["name"] as! String)) :  (source = "source: ")
+                ((myI!["author"] as? String) != nil ) ? (author = "author: " + (myI!["author"] as! String)) : (author = "author: ")
+                ((myI!["title"] as? String) != nil) ? (title = (myI!["title"] as! String)) : (title = " ")
+                ((myI!["description"] as? String ) != nil) ? (description = (myI!["description"] as! String )) : (description = " ")
+                ((myI!["url"] as? String) != nil) ? (url = (myI!["url"] as! String)) : (url = " ")
+                ((myI!["urlToImage"] as? String) != nil) ? (imageUrl = (myI!["urlToImage"] as! String)) : (imageUrl = " ")
+                ((myI!["publishedAt"] as? String) != nil) ? (publishedAt = (myI!["publishedAt"] as! String)) : (publishedAt = " ")
+
+                
                 let post = NewsPost(source: source, author : author, title: title, descript: description , publishedAt: publishedAt , url: url , imageUrl: imageUrl)
                 posts.append(post)
             }
