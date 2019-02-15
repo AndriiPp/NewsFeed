@@ -32,9 +32,7 @@ enum Reason {
 struct HTTPClient {
     func apiRequest<A>(_ session: URLSession = URLSession.shared, resource: Resource<A>, failure: @escaping (Reason, Data?) -> (), completion: @escaping (A) -> ()) {
         let urlString = resource.baseURL +  resource.queryString 
-        print(urlString)
         let url = URL(string: urlString)
-        print(url as Any)
         
         let request = NSMutableURLRequest(url: url!)
         request.httpMethod = resource.method.rawValue
