@@ -11,8 +11,7 @@ import SafariServices
 
 class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    
-    
+    var refreshControl : UIRefreshControl?
     let searchController = UISearchController(searchResultsController: nil)
     @IBOutlet weak var tableView: UITableView!
     var feeds: [NewsPost] = []
@@ -28,6 +27,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         tableView.dataSource = self
         navBar()
         searchControl()
+        addRefreshControl()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -43,16 +43,24 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
     
+
+    func addRefreshControl(){
+        refreshControl = UIRefreshControl()
+        refreshControl?.tintColor = UIColor.blue
+        refreshControl?.addTarget(self, action: #selector(fetchData), for: .valueChanged)
+        tableView.addSubview(refreshControl!)
+    }
     @objc func fetchData(){
+        feeds = []
         let feedClient = OpenNewsFeedClient()
         feedClient.requestFeed { (feeds) in
             self.feeds = feeds
+            self.refreshControl!.endRefreshing()
             OperationQueue.main.addOperation {
                 self.tableView.reloadSections(IndexSet(integer: 0), with: .left)
             }
         }
     }
-    
     private func searchControl()  {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -134,5 +142,6 @@ extension MainViewController: UISearchResultsUpdating {
         filterContentForSearchText(searchController.searchBar.text!)
     }
 }
+
 
 

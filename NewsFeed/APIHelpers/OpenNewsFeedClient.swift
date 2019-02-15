@@ -79,14 +79,6 @@ class OpenNewsFeedClient {
                     publishedAt = " "
                 }
                 let post = NewsPost(source: source, author : author, title: title, descript: description , publishedAt: publishedAt , url: url , imageUrl: imageUrl)
-                
-                //            print(post.source + "\n")
-                //            print(post.author + "\n")
-                //            print(post.title + "\n")
-                //            print(post.descript + "\n")
-                //            print(post.url + "\n")
-                //            print(post.imageUrl + "\n")
-                //            print(post.publishedAt + "\n")
                 posts.append(post)
             }
         } else {
@@ -95,6 +87,7 @@ class OpenNewsFeedClient {
         //    print(posts)
         return posts
     }
+
     private func decodeJSON(data: Data) -> [String:AnyObject]? {
         
         do {
