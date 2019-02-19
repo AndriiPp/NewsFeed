@@ -9,13 +9,13 @@
 import Foundation
 
 class OpenNewsFeedClient {
-     let key:String = "3ce4f4731af54458b4aaec0a58d1f644"
      func requestFeed(completionHandler: @escaping ([NewsPost]) -> ()){
         //set up variables
         let baseURL = "https://newsapi.org/v2/top-headlines"
-        let queryString = "?country=ua&apiKey=\(key)"
+        let categoryString : String = "sports"
+        let countryString : String = "ua"
         // Set up resource
-        let requestResource = Resource(baseURL: baseURL,  queryString: queryString, method: Method.GET) { (response) -> Data? in
+        let requestResource = Resource(baseURL: baseURL,  countryString: countryString, categoryString: categoryString, method: Method.GET) { (response) -> Data? in
             return(response)
         }
         let requestClient = HTTPClient()
@@ -29,7 +29,6 @@ class OpenNewsFeedClient {
         }
     }
     private func parseNewsFeed(json: [String: AnyObject?]) -> [NewsPost] {
-        //   var k = json["totalResults"] as! Int
         
         var posts : [NewsPost] = []
         if let feedList = json["articles"] as? [NSDictionary]{

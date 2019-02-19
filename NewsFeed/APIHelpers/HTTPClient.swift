@@ -17,7 +17,8 @@ enum Method: String {
 
 struct Resource<A> {
     let baseURL: String
-    let queryString: String
+    let countryString: String
+    let categoryString : String
     let method : Method
     let parse: (Data) -> A?
 }
@@ -31,7 +32,7 @@ enum Reason {
 
 struct HTTPClient {
     func apiRequest<A>(_ session: URLSession = URLSession.shared, resource: Resource<A>, failure: @escaping (Reason, Data?) -> (), completion: @escaping (A) -> ()) {
-        let urlString = resource.baseURL +  resource.queryString 
+        let urlString = resource.baseURL + "?country=\(resource.countryString)&category=\(resource.categoryString)&sortBy=publishedAt&apiKey=3ce4f4731af54458b4aaec0a58d1f644"
         let url = URL(string: urlString)
         
         let request = NSMutableURLRequest(url: url!)

@@ -37,12 +37,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     private func navBar(){
         navigationItem.title = "News Feed"
         let nav = self.navigationController?.navigationBar
-        nav?.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "CourierNewPS-BoldItalicMT", size: 24)!]
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(fetchData))
-        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.black
-        
+        nav?.barTintColor = UIColor(r: 32, g: 72, b: 122)
+        nav?.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(r: 220, g: 240, b: 44), NSAttributedString.Key.font: UIFont(name: "CourierNewPS-BoldItalicMT", size: 24)!]
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "filter", style: .plain, target: self, action: #selector(OpenFilterVC))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(r: 220, g: 240, b: 44)
     }
     
+    @objc func OpenFilterVC(){
+        weak var filterVC = (VCBuilder.createFilterVC() as! FilterViewController)
+        self.navigationController?.pushViewController(filterVC!, animated: true)
+        //self.present(filterVC!, animated: true, completion: nil)
+    }
 
     func addRefreshControl(){
         refreshControl = UIRefreshControl()
