@@ -17,6 +17,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var feeds: [NewsPost] = []
     var filteredFeeds : [NewsPost] = []
     let cellId = "cellId"
+    var limit = 4
     var searchActive : Bool = false
 
     override func viewDidLoad() {
@@ -134,6 +135,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 350
     }
+ 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
