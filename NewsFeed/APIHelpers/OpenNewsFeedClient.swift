@@ -12,12 +12,13 @@ class OpenNewsFeedClient {
      func requestFeed(completionHandler: @escaping ([NewsPost]) -> ()){
         //set up variables
         let baseURL = "https://newsapi.org/v2/top-headlines"
-        let categoryString : String = "sports"
-        let countryString : String = "ua"
         // Set up resource
-        let requestResource = Resource(baseURL: baseURL,  countryString: countryString, categoryString: categoryString, method: Method.GET) { (response) -> Data? in
+        let requestResource = Resource(baseURL: baseURL,  countryString: FilterViewController.countryString! , categoryString: FilterViewController.categoryString! , method: Method.GET) { (response) -> Data? in
             return(response)
         }
+        FilterViewController.categoryString = nil
+        FilterViewController.countryString = nil
+
         let requestClient = HTTPClient()
         requestClient.apiRequest(resource: requestResource, failure: { (response, data) in
             print(response)
